@@ -1,4 +1,5 @@
 "use client"
+import { MouseEvent } from 'react';
 import styles from "./page.module.scss";
 import Image from "next/image";
 import {
@@ -19,14 +20,18 @@ export default function Home() {
   const plane2=useRef(null);
   const plane3=useRef(null);
   const mouseSpeed=0.1;
-  const gsapMouseMove = (e) => {
+  
+  const gsapMouseMove = (e:MouseEvent):void => {
       // gsap mouse 위치 offset을 선언:
       const {movementX,movementY}=e;
       // gsap  set:
       // gsap set target에 ref명.current 쓰는 이유? 실질적 render가 안되는 빈 값을 참조한 것이기 때문
       // gasp set x값에 mouse 움직인 x값, y값에 ":
       gsap.set(plane1.current,{x:`+=${movementX*mouseSpeed}`,y:`+=${movementY*mouseSpeed}`})
+      gsap.set(plane2.current,{x:`+=${movementX*mouseSpeed*0.5}`,y:`+=${movementY*mouseSpeed*0.5}`})
+      gsap.set(plane3.current,{x:`+=${movementX*mouseSpeed*0.3}`,y:`+=${movementY*mouseSpeed*0.02}`})
   }
+  // ani에 ease를 추가하는 polish 작업:
   return (
     <div id="wrap" className={styles.main} onMouseMove={(e) => gsapMouseMove(e)}>
       {/* page 3개를 한 데로 모음: */}
